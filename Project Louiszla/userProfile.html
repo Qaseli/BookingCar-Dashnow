@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- <meta http-equiv="refresh" content="5" > -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./admin.css">
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script> -->
+    <title>ADMIN</title>
+    <script>
+        async function Delete(user) {
+            const payload = new FormData()
+            payload.append("user", user)
+            const response = await fetch("http://localhost/Project%20Louiszla/userDelete.php",
+                {
+                    method: "POST",
+                    body: payload
+                })
+            const data = await response.text();
+        }
+    </script>
+    <script src="./admin.js" defer></script>
+    <!-- <script src="./JS/autologin.js" defer></script> -->
+    <style>
+        .content {
+            padding: 0;
+        }
+
+        body {
+            background-color: #3b3d41;
+        }
+
+        /* .back {
+            height: 106vh;
+            width: 98.95vw;
+            background-image: url(./image/background.jpg);
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        } */
+
+        form {
+            width: 95vw;
+            display: flex;
+            flex-direction: column;
+        }
+
+        form input[type=text],
+        form input[type=password],
+        form textarea {
+            padding: 7px 14px;
+            border-radius: 14px;
+            /* border: none; */
+            background-color: #e7e7e7;
+            /* border-bottom: 2px solid; */
+        }
+
+        .exist {
+            animation: shake5 0.3s ease-in-out 0s 2;
+            border: 2px solid #ff9494;
+        }
+
+        span.existing {
+            color: #d71919;
+        }
+
+        form * {
+            margin-bottom: 15px;
+        }
+
+        form {
+            background-color: #3b3d41;
+            padding: 30px;
+            color: white;
+        }
+
+        form input[type=submit] {
+            border: none;
+            background-color: #fce38a;
+            height: 40px;
+            border-radius: 9px;
+            cursor: pointer;
+            width: 10%;
+        }
+
+        form a {
+            text-decoration: none;
+            color: #fce38a;
+        }
+
+        #respon {
+            position: absolute;
+            background-color: white;
+            font-weight: bold;
+            font-size: 29px;
+            /* padding: 337px 90px; */
+            border-radius: 14px;
+            transition: padding 0.5s;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="navbar">
+        <a href="./admin.html" class="Logo">
+            <img src="./images/dash-logo-white.svg" alt="page icon">
+            <div class="account-section">
+                <a href="./adminSignIn.html"><span class="btn signin">Sign In</span></a>
+            </div>
+    </div>
+    <div class="content">
+        <div class="back">
+            <form>
+                <H1>Edit account detail</H1>
+                <label for="userName">Username</label>
+                <input type="text" name="userName" id="userName" autocomplete="off" title="Username is required"
+                    required>
+                <label for="userPhoneNo">Phone No</label>
+                <input type="text" name="userPhoneNo" id="userPhoneNo" autocomplete="off" pattern="[0-9]{3}-[0-9]{8}"
+                    required>
+                <label for="dob">Date of Birth</label>
+                <input type="text" name="dob" id="dob" autocomplete="off" required>
+                <label for="userAddress">Address</label>
+                <textarea style="resize: none;" type="text" name="userAddress" id="userAddress" autocomplete="off"
+                    required></textarea>
+                <label for="country">Country</label>
+                <input type="text" name="country" id="country" autocomplete="off" required>
+                <label for="city">City</label>
+                <input type="text" name="city" id="city" autocomplete="off" required>
+                <input type="submit" value="Update">
+            </form>
+        </div>
+    </div>
+    <script>
+        const form = document.forms[0]
+        async function load() {
+            let url = new URL(window.location.href)
+            let user = url.searchParams.get("user")
+            const payload = new FormData()
+            payload.append("user", user)
+
+            let response = await fetch("http://localhost/Project%20Louiszla/userDetail.php", { method: "POST", body: payload }).then(res => res.text())
+            response = response.trim()
+            form.userName.value = response.split(":")[1].split(";")[0]
+            form.userPhoneNo.value = response.split(":")[1].split(";")[1]
+            form.dob.value = response.split(":")[1].split(";")[2]
+            form.userAddress.value = response.split(":")[1].split(";")[3]
+            form.country.value = response.split(":")[1].split(";")[4]
+            form.city.value = response.split(":")[1].split(";")[5]
+
+        }
+        load()
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault()
+
+            const payload = new FormData(form)
+            let response = await fetch("http://localhost/Project%20Louiszla/userUpdate.php", {
+                method: "POST",
+                body: payload
+            }).then(res => res.text())
+
+            response = response.trim()
+
+            if (response.startsWith("SUCCESS")) {
+                alert("Profile has been update in database")
+            }
+            else {
+                console.error(response)
+            }
+        })
+    </script>
+</body>

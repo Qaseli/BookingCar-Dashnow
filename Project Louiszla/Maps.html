@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" class="rel">
+
+    <title>Document</title>
+</head>
+<link rel="stylesheet" href="Maps.css">
+<body>
+    <div class="container">
+        <h1 class="text-center">
+            QWEQWEQWEQEWQEQWEQWe
+        </h1>
+        <form action="" class="form-horrizontal">
+            <div class="form-group">
+                <label for="from">From Location</label>
+                <input type="text" class="form-control" name="" placeholder="Origin Location" id="from">
+            </div>
+            <div class="form-group">
+                <label for="from">To Location</label>
+                <input type="text" class="form-control" name="" placeholder="Destination Location" id="to">
+            </div>
+            <div class="form-group">
+                <button class="btn btn-info btn-lg"  onclick="calcRoute()">
+                Calculate
+            </button>
+            </div>
+        </form>
+
+        <div class="container-fluid">
+            <div id="output">
+
+            </div>
+            <div id="googleMap">
+                
+            </div>
+        </div>
+    </div>
+</body>
+<script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAL3n8ns3DBXYTGLSOMSj81RaJ2izTQjo8&libraries=places"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="Maps.js"></script>
+
+</html>
